@@ -13,14 +13,15 @@ body {
   background-color: #242530;
 }
 
-h1 {
+header {
   color: #FF60C0;
+  font-size: 15vmin;
 }
 
 #board {
   display: grid;
-  grid-template-rows: repeat(2, 30vmin);
-  grid-template-columns: repeat(8, 30vmin);
+  grid-template-rows: repeat(2, 20vmin);
+  grid-template-columns: repeat(8, 20vmin);
 }
 
 #board #p1score {
