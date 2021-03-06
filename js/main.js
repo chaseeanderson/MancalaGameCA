@@ -16,16 +16,34 @@ let board, gems, turn, scores, winner;
 
 
 /*----- cached element references -----*/
-let scoreEls = {
+const scoreEls = {
   p1: document.querySelector('p1score'),
   p2: document.querySelector('p2score')
 }
-
-let cellEls = [...document.querySelectorAll('main div')];
-console.log(cellEls)
+const cellEls = [...document.querySelectorAll('main div')];
+const replayBtn = document.querySelector('button'); 
+const playableEls = [...document.querySelectorAll('#board div:nth-child(n+2):nth-child(-n+13)')]
 
 
 /*----- event listeners -----*/
-
+playableEls.forEach(el => el.addEventListener('click', handleSelect));
+replayBtn.addEventListener('click', init);
 
 /*----- functions -----*/
+init()
+
+function handleSelect() {
+
+console.log('billygoat')
+  // render()
+}
+
+function render () {
+
+}
+
+function init () {
+
+
+  render()
+}
