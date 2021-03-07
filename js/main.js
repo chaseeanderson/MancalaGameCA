@@ -51,20 +51,28 @@ function player1Click(e) {
   gems = board[selection];
   board[selection] = 0;
   // Distributes gems
-  while (gems > 0) {
-    for (let i = selection + 1; i < board.length; i++) {
-      gems--
-      board[i]++
-      if (board[i] === 13) break; // START HERE TODAY. LOOP ISNT STOPPING
-      render()
-    }
+  for (let i = selection + 1; i < board.length; i++) {
+    if (gems < 2) break;
+    if (i === 12  && gems >= 1) {
+      reLoop(); 
+    }; 
+    gems--
+    board[i]++
+    
+    render()
   }
+  
   console.log(board)
+  console.log(gems)
   
-  // const divId = document.getElementById(`${playableIdx}`)
-  // console.log(playableIdx)
-  // console.log(divId)
-  
+}
+
+function reLoop () {
+  for (let i = 0; i < board.length; i++) {
+    if (gems < 2) break;
+    gems--
+    board[i]++
+  }
 }
 
 function render () {
