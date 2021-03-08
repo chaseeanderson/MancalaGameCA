@@ -120,11 +120,10 @@ function playerNeg1Click(e) {
 
 function reLoop () {
   for (let i = 0; i < board.length; i++) {
-    if (gems < 1) break;
+    if (!gems) break;
     // Skips opponent's store on player -1's turn
     if (turn === -1 && i === 6) continue;
     // if (turn === 1 && i === 11) continue;
-
     gems--
     board[i]++
   }
@@ -138,11 +137,13 @@ function getWinner() {
   if (!p1BoardSum || !pNeg1BoardSum) distributeRem();
   
   function distributeRem() {
+    // adds gems left on board to respective stores
     board[6] += p1BoardSum;
     board[13] += pNeg1BoardSum;
+    // sets gems not included in stores to 0
     for (let i = 0; i < board.length; i++) {
+      if (i === 6 || i === 13) continue; 
       board[i] = 0;
-      if (i === 5) continue; // TODO FIX THIS 
     }
     determineWinner(board[6], board[13]);
     render();
@@ -180,7 +181,7 @@ function render () {
 
 
 function init () {
-  board = [0, 0, 4, 4, 2, 1, 30, 0, 0, 0, 0, 0, 15, 30];
+  board = [0, 0, 0, 0, 0, 1, 30, 0, 0, 0, 0, 0, 4, 30];
   gems = 0;
   turn = 1;
   
