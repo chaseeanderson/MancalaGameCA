@@ -57,28 +57,28 @@ function player1Click(e) {
     console.log(`no no billy`)
     return;
   } else if (!board[selectionIdx]) {
-      console.log(`thats a 0!`)
-      return;
+    console.log(`thats a 0!`)
+    return;
   } else {
-    // Sets the amount of gems to be distributed
-    gems = board[selectionIdx];
-    board[selectionIdx] = 0;
-    // Distributes gems
-    for (let i = selectionIdx + 1; i < board.length; i++) {
-      // Stops loop there are no more gems to distribute
-      if (gems < 1) break;
-      // Allows player to play again if they place their last gem in their own store
-      if (i === 6 && gems === 1) {
-        console.log(`go again billy!`)
-        turn *= -1;
-      }
-      // Continues gem distribution at beginning of array and skips opponent's store.
-      if (i === 12  && gems >= 1) reLoop(); 
-      
-      gems--;
-      board[i]++;
+      // Sets the amount of gems to be distributed
+      gems = board[selectionIdx];
+      board[selectionIdx] = 0;
+      // Distributes gems
+      for (let i = selectionIdx + 1; i < board.length; i++) {
+        // Stops loop there are no more gems to distribute
+        if (gems < 1) break;
+        // Allows player to play again if they place their last gem in their own store
+        if (i === 6 && gems === 1) {
+          console.log(`go again billy!`)
+          turn *= -1;
+        }
+        // Continues gem distribution at beginning of array and skips opponent's store.
+        if (i === 12  && gems >= 1) reLoop(); 
+        
+        gems--;
+        board[i]++;
+        }
       turn *= -1;
-      }
     }
   console.log(turn)  
   render();
@@ -95,25 +95,25 @@ function playerNeg1Click(e) {
       console.log(`thats a 0!`)
       return;
   } else {
-    // Sets the amount of gems to be distributed
-    gems = board[selectionIdx];
-    board[selectionIdx] = 0;
-    // Distributes gems
-    for (let i = selectionIdx + 1; i < board.length; i++) {
-      if (gems < 1) break;
-      // Skips opponent's store
-      // if (i = 6) continue;
-      // Allows player to play again if they place their last gem in their own store
-      if (i === 13 && gems === 1) {
-        console.log(`go again billy!`)
-        turn *= -1;
-      }
-      if (i === 13  && gems >= 1) reLoop(); 
-      
-      gems--;
-      board[i]++;
-      turn *= -1;
+      // Sets the amount of gems to be distributed
+      gems = board[selectionIdx];
+      board[selectionIdx] = 0;
+      // Distributes gems
+      for (let i = selectionIdx + 1; i < board.length; i++) {
+        if (gems < 1) break;
+        // Skips opponent's store
+        // if (i = 6) continue;
+        // Allows player to play again if they place their last gem in their own store
+        if (i === 13 && gems === 1) {
+          console.log(`go again billy!`)
+          turn *= -1;
+        }
+        if (i === 13  && gems >= 1) reLoop(); 
+        
+        gems--;
+        board[i]++;
       } 
+      turn *= -1;
     }
   console.log(turn)
   render();
@@ -156,9 +156,9 @@ function render () {
 
 
 function init () {
-  board = [4, 4, 4, 4, 4, 4, 30, 0, 0, 0, 0, 0, 12, 40];
+  board = [4, 4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4, 4, 0];
   gems = 0;
-  turn = -1;
+  turn = 1;
   
   getWinner();
   render()
