@@ -24,14 +24,17 @@ let board, gems, turn, scores, winner;
 //   p2: document.getElementById('13')
 // }
 
-const cellEls = [...document.querySelectorAll('main div')];
+// selects divs for player -1
+const cellElsNeg1 = [...document.querySelectorAll('main div')];
+// selects divs for player 1
+const cellEls1 = [...document.querySelectorAll('#board div:nth-child(n+2):nth-child(-n+7)')]
+// reverses player 1's array to update correct direction
+const cellEls1R = cellEls1.reverse();
 
 const replayBtn = document.querySelector('button'); 
-// const playableEls = [...document.querySelectorAll('#board div:nth-child(n+2):nth-child(-n+13)')]
 
 
 /*----- event listeners -----*/
-// cellEls.forEach(el => el.addEventListener('click', player1Click));
 document.getElementById('board').addEventListener('click', handleTurn);
 replayBtn.addEventListener('click', init);
 
@@ -51,7 +54,7 @@ function handleTurn(e) {
 
 function player1Click(e) {
   if (winner) return; 
-  const selectionIdx = cellEls.indexOf(e.target);
+  const selectionIdx = cellEls1R.indexOf(e.target);
   // Sets valid clickable spaces
   if (selectionIdx !== playerRef[1].spaces[selectionIdx]) {
     console.log(`no no billy`)
@@ -86,7 +89,7 @@ function player1Click(e) {
 
 function playerNeg1Click(e) {
   if (winner) return; 
-  const selectionIdx = cellEls.indexOf(e.target);
+  const selectionIdx = cellElsNeg1.indexOf(e.target);
   // Sets valid clickable spaces (-7 to set the spaces index back to 0 to start at the beginning of the array)
   if (selectionIdx !== playerRef[-1].spaces[selectionIdx - 7]) {
     console.log(`no no billy`)
@@ -156,7 +159,7 @@ function render () {
 
 
 function init () {
-  board = [4, 4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4, 4, 0];
+  board = [1, 1, 1, 1, 1, 1, 0, 4, 4, 4, 4, 4, 4, 0];
   gems = 0;
   turn = 1;
   
