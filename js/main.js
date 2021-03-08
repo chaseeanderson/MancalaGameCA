@@ -10,7 +10,6 @@ const playerRef = {
   }
 };
 
-
 // TODO - get gem image USE VECTOR SCALE IMAGES or whatever its called
 // const gemsImg = 
 
@@ -19,20 +18,17 @@ let board, gems, turn, scores, winner;
 
 
 /*----- cached element references -----*/
-// const scoreEls = {
-//   p1: document.getElementById('6'),
-//   p2: document.getElementById('13')
-// }
-
 // selects divs for player -1
 const cellElsNeg1 = [...document.querySelectorAll('main div')];
 // selects divs for player 1
 const cellEls1 = [...document.querySelectorAll('#board div:nth-child(n+2):nth-child(-n+7)')]
 // reverses player 1's array to update correct direction
 const cellEls1R = cellEls1.reverse();
-
+// replay button selector
 const replayBtn = document.querySelector('button'); 
-
+// message elements
+const mainMsg = document.querySelector('h1');
+const mscMsg = document.querySelector('h2');
 
 /*----- event listeners -----*/
 document.getElementById('board').addEventListener('click', handleTurn);
@@ -124,9 +120,11 @@ function playerNeg1Click(e) {
 
 function reLoop () {
   for (let i = 0; i < board.length; i++) {
-    if (gems < 2) break;
+    if (gems < 1) break;
     // Skips opponent's store on player -1's turn
     if (turn === -1 && i === 6) continue;
+    // if (turn === 1 && i === 11) continue;
+
     gems--
     board[i]++
   }
@@ -136,30 +134,53 @@ function getWinner() {
   winner = null;
   const p1BoardSum = board[0] + board[1] + board[2] + board[3] + board[4] + board[5];
   const pNeg1BoardSum = board[7] + board[8] + board[9] + board[10] + board[11] + board[12];
-  
-  const p1Score = board[6];
-  const pNeg1Score = board[13];
-  
-  if (!p1BoardSum || !pNeg1BoardSum) determineWinner(p1Score, pNeg1Score);
 
-  function determineWinner(score1, scoreNeg1) {
-    if (score1 > scoreNeg1) {
-      winner = playerRef[1];
-    } else winner = playerRef[-1];
+  if (!p1BoardSum || !pNeg1BoardSum) distributeRem();
+  
+  function distributeRem() {
+    board[6] += p1BoardSum;
+    board[13] += pNeg1BoardSum;
+    for (let i = 0; i < board.length; i++) {
+      board[i] = 0;
+      if (i === 5) continue; // TODO FIX THIS 
+    }
+    determineWinner(board[6], board[13]);
+    render();
+  }
+  // let p1Score = board[6];
+  // let pNeg1Score = board[13];
+  
+  function determineWinner(p1, pNeg1) {
+    if (p1 > pNeg1) {
+      winner = 1;
+    } else winner = -1;
   }
 }
 
 function render () {
   // render the board
   board.forEach(function (cell, idx) {
-    div = document.getElementById(`${idx}`)
-    div.textContent = board[idx]
+    div = document.getElementById(`${idx}`);
+    div.textContent = board[idx];
   })
+
+  // render messgaes
+    // tie game
+  if (winner === 'T') mainMsg.textContent = `Tie Game!`;
+    // winner
+  else if (winner) mainMsg.textContent = `${playerRef[winner].name} wins!`;
+    // turn
+  else mainMsg.textContent = `It's ${playerRef[turn].name}'s turn!`;
+  // if (turn === 1) document.querySelector('h1').textContent = `It's Player 1's turn!`;
+  // else document.querySelector('h1').textContent = `It's Player 2's turn!`;
+
+  // error messages
+
 }
 
 
 function init () {
-  board = [1, 1, 1, 1, 1, 1, 0, 4, 4, 4, 4, 4, 4, 0];
+  board = [0, 0, 4, 4, 2, 1, 30, 0, 0, 0, 0, 0, 15, 30];
   gems = 0;
   turn = 1;
   

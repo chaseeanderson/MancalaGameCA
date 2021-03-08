@@ -24,25 +24,22 @@ header {
   grid-template-columns: repeat(8, 20vmin);
 }
 
+#board > div {  
+  display: flex;
+  border: 0.5vmin solid #5DE7FF;
+  margin: 0.1vmin;
+  border-radius: 20%;
+  color: white;
+  align-items: center;
+  justify-content: center;
+}
+
 [id="6"] {
-  grid-area: 1 / 1 / 3 / 2;
+  grid-row: 1 / span 2;
   background-color: peachpuff;
-  align-items: stretch;
 }
 
 [id="13"] {
   grid-area: 1 / -2 / 3 / -1;
   background-color: peachpuff;
-}
-
-#board > div {  
-  display: block;
-  height: 20vmin;
-  width: 20vmin;
-  border: 0.5vmin solid #5DE7FF;
-  margin: 0.1vmin;
-  border-radius: 20%;
-  color: white;
-  text-align: center;
-  line-height: 20vmin;
 }
