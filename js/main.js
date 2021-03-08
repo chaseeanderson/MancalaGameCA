@@ -121,13 +121,21 @@ function reLoop () {
   }
 }
 
-function render () {
+// board.forEach(element => {
+//   console.log(element)
+// });
 
+function render () {
+  // render the board
+  board.forEach(function (cell, idx) {
+    div = document.getElementById(`${idx}`)
+    div.textContent = board[idx]
+  })
 }
+
 
 function init () {
 board = [4, 4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4, 4, 0];
-
 gems = 0;
 turn = 1;
 winner = null;

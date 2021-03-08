@@ -15,4 +15,7 @@
   border: 0.5vmin solid #5DE7FF;
   margin: 0.1vmin;
   border-radius: 20%;
+  color: white;
+  text-align: center;
+  line-height: 20vmin;
 }
