@@ -9,9 +9,9 @@ const playerRef = {
     spaces: [7, 8, 9, 10, 11, 12]
   }
 };
-// TODO - get gem image
+
+// TODO - get gem image USE VECTOR SCALE IMAGES or whatever its called
 // const gemsImg = 
-console.log(playerRef[1].spaces)
 
 /*----- app's state (variables) -----*/
 let board, gems, turn, scores, winner; 
@@ -31,7 +31,7 @@ const replayBtn = document.querySelector('button');
 
 /*----- event listeners -----*/
 // cellEls.forEach(el => el.addEventListener('click', player1Click));
-document.getElementById('board').addEventListener('click', player1Click);
+document.getElementById('board').addEventListener('click', handleTurn);
 replayBtn.addEventListener('click', init);
 
 /*----- functions -----*/
@@ -39,8 +39,12 @@ init()
 
 
 
-function handleSelect() {
-
+function handleTurn(e) {
+  if (turn === 1) {
+    player1Click(e)
+  } else {
+    playerNeg1Click(e);
+  }
 
   render()
 }
@@ -48,32 +52,65 @@ function handleSelect() {
 
 
 function player1Click(e) {
-  let selectionIdx = cellEls.indexOf(e.target)
+  if (winner) return; 
+  const selectionIdx = cellEls.indexOf(e.target);
   // Sets valid clickable spaces
   if (selectionIdx !== playerRef[1].spaces[selectionIdx]) {
     console.log(`no no billy`)
     return;
   } else {
-  // Sets the amount of gems to be distributed
-  gems = board[selectionIdx];
-  board[selectionIdx] = 0;
-  // Distributes gems
-  for (let i = selectionIdx + 1; i < board.length; i++) {
-    if (gems < 1) break;
-    if (i === 12  && gems >= 1) {
-      reLoop(); 
-    }; 
-    gems--
-    board[i]++
-    
-  }
-
-    render()
-  }
-  
+      turn *= -1;
+      // Sets the amount of gems to be distributed
+      gems = board[selectionIdx];
+      board[selectionIdx] = 0;
+      // Distributes gems
+      for (let i = selectionIdx + 1; i < board.length; i++) {
+        if (gems < 1) break;
+        // Allows player to play again if they place their last gem in their own store
+        if (i === 6 && gems === 1) {
+          console.log(`go again billy!`)
+          turn *= -1;
+        }
+        if (i === 12  && gems >= 1) reLoop(); 
+        gems--;
+        board[i]++;
+        }
+    }
   console.log(board)
   console.log(gems)
-  
+  console.log(turn)  
+  render();
+}
+
+function playerNeg1Click(e) {
+  if (winner) return; 
+  const selectionIdx = cellEls.indexOf(e.target);
+  // Sets valid clickable spaces (-7 to set the spaces index back to 0 to start at the beginning of the array)
+  if (selectionIdx !== playerRef[-1].spaces[selectionIdx- 7]) {
+    console.log(`no no billy`)
+    return;
+  } else {
+      turn *= -1;
+      // Sets the amount of gems to be distributed
+      gems = board[selectionIdx];
+      board[selectionIdx] = 0;
+      // Distributes gems
+      for (let i = selectionIdx + 1; i < board.length; i++) {
+        if (gems < 1) break;
+        // Allows player to play again if they place their last gem in their own store
+        if (i === 13 && gems === 1) {
+          console.log(`go again billy!`)
+          turn *= -1;
+        }
+        if (i === 13  && gems >= 1) reLoop(); 
+        gems--;
+        board[i]++;
+        } 
+    }
+  console.log(board)
+  console.log(gems)
+  console.log(turn)
+  render();
 }
 
 function reLoop () {
