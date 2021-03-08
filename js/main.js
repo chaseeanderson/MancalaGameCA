@@ -152,9 +152,9 @@ function getWinner() {
   // let pNeg1Score = board[13];
   
   function determineWinner(p1, pNeg1) {
-    if (p1 > pNeg1) {
-      winner = 1;
-    } else winner = -1;
+    if (p1 === pNeg1) winner = 'T';
+    else if (p1 > pNeg1) winner = 1;
+    else winner = -1;
   }
 }
 
@@ -172,16 +172,14 @@ function render () {
   else if (winner) mainMsg.textContent = `${playerRef[winner].name} wins!`;
     // turn
   else mainMsg.textContent = `It's ${playerRef[turn].name}'s turn!`;
-  // if (turn === 1) document.querySelector('h1').textContent = `It's Player 1's turn!`;
-  // else document.querySelector('h1').textContent = `It's Player 2's turn!`;
-
-  // error messages
+    // miscellaneous messages
+    if (i === 6 && gems === 1) mscMsg.textContent = `Go again!`
 
 }
 
 
 function init () {
-  board = [0, 0, 0, 0, 0, 1, 30, 0, 0, 0, 0, 0, 4, 30];
+  board = [0, 0, 0, 0, 0, 1, 30, 0, 0, 0, 0, 0, 1, 30];
   gems = 0;
   turn = 1;
   
