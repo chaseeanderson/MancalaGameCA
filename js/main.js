@@ -49,6 +49,16 @@ function handleTurn(e) {
   
 }
 
+function capture (n) {
+  if (turn === 1) {
+    board[6] += board[n];
+    board[n] = 0;
+  } else {
+    board[13] += board[n];
+    board[n] = 0;
+  }
+}
+
 function player1Click(e) {
   if (winner) return; 
   const selectionIdx = cellEls1R.indexOf(e.target);
@@ -65,7 +75,7 @@ function player1Click(e) {
       board[selectionIdx] = 0;
       // Distributes gems
       for (let i = selectionIdx + 1; i < board.length; i++) {
-        // Stops loop there are no more gems to distribute
+        // Stops loop if there are no more gems to distribute
         if (gems < 1) break;
         // Allows player to play again if they place their last gem in their own store
         if (i === 6 && gems === 1) {
@@ -73,7 +83,7 @@ function player1Click(e) {
           turn *= -1;
         }
         // Captures opponent's gems 
-        if (board[i] === 0 && gems === 1) capture();
+        if (board[i] === 0 && gems === 1) capture(12 - i);
         // Continues gem distribution at beginning of array and skips opponent's store.
         if (i === 11  && gems >= 1) reLoop(); 
         
@@ -82,6 +92,8 @@ function player1Click(e) {
         }
       turn *= -1;
     }
+
+   
   render();
 }
 
@@ -107,6 +119,9 @@ function playerNeg1Click(e) {
           mscMsg.textContent = `Have another go!`
           turn *= -1;
         }
+        // Captures opponent's gems 
+        if (board[i] === 0 && gems === 1) capture(Math.abs(i - 12));
+        // Starts loop at the beginning if end is reached
         if (i === 13  && gems >= 1) reLoop(); 
         
         gems--;
@@ -119,21 +134,30 @@ function playerNeg1Click(e) {
 
 function reLoop () {
   for (let i = 0; i < board.length; i++) {
-    if (gems === 2) break;
+    if (gems === 1) break;
     // starts loop again if there are more gems to distribute
     if (i === 13 && gems > 0) reLoop();
-    // Skips opponent's store on player -1's turn
-    if (turn === -1 && i === 6) continue;
-    // Skips opponent's store on player 1's turn
-    if (turn === 1 && i === 13) board[i]--;
+    // Turn-based conditions after the first pass of the board
+    
+    if (turn === -1) {
+      // Skips opponent's store on player -1's turn
+      if (i === 6) continue;
+      // Captures opponent's gems 
+      if (board[i] === 0 && gems === 2) capture(Math.abs(i - 12));
+    }  
+    
+    if (turn === 1) {
+      // Skips opponent's store on player 1's turn
+      if (i === 13) board[i]--;
+      // Captures opponent's gems 
+      if (board[i] === 0 && gems === 2) capture(12 - i);
+    }  
     gems--
     board[i]++
   }  
 }
 
-function capture (n) {
 
-}
 
 function getWinner() {
   winner = null;
@@ -186,7 +210,7 @@ function render () {
 
 
 function init () {
-  board = [4, 4, 4, 4, 70, 4, 0, 4, 4, 4, 4, 59, 4, 0];
+  board = [12, 50, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 13, 0];
   gems = 0;
   turn = 1;
   
