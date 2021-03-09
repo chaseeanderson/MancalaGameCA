@@ -175,7 +175,7 @@ function render () {
     // hide/show msc message
     mscMsg.style.visibility = winner ? 'hidden' : 'visible';
     setTimeout(function() {
-      mscMsg.style.visibility = 'hidden';
+      mscMsg.textContent = '';
     }, 3000);
 }
 
