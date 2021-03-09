@@ -206,6 +206,8 @@ function render () {
     setTimeout(function() {
       mscMsg.textContent = '';
     }, 3000);
+  // Hide/Show play again button
+  replayBtn.style.visibility = winner ? 'visible' : 'hidden';
 }
 
 
