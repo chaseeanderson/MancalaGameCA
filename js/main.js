@@ -175,14 +175,14 @@ function reLoop () {
       // Skips opponent's store on player -1's turn
       if (i === 6) continue;
       // Captures opponent's gems 
-      if (board[i] === 0 && gems === 2) capture(Math.abs(i - 12));
+      if (board[i] === 0 && i !== 13 && gems === 2) capture(Math.abs(i - 12));
     }  
     
     if (turn === 1) {
       // Skips opponent's store on player 1's turn
       if (i === 13) board[i]--;
       // Captures opponent's gems 
-      if (board[i] === 0 && gems === 2) capture(12 - i);
+      if (board[i] === 0 && i !== 6 && gems === 2) capture(12 - i);
     }
 
     gems--
