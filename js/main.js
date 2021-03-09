@@ -45,7 +45,8 @@ function handleTurn(e) {
   }
 
   getWinner();
-  render()
+  render();
+  
 }
 
 function player1Click(e) {
@@ -53,11 +54,11 @@ function player1Click(e) {
   const selectionIdx = cellEls1R.indexOf(e.target);
   // Sets valid clickable spaces
   if (selectionIdx !== playerRef[1].spaces[selectionIdx]) {
-    console.log(`no no billy`)
+    mscMsg.textContent = `Keep your clicks to yourself!`
     return;
   } else if (!board[selectionIdx]) {
-    console.log(`thats a 0!`)
-    return;
+      mscMsg.textContent = `Can't really take something from nothing`
+      return;
   } else {
       // Sets the amount of gems to be distributed
       gems = board[selectionIdx];
@@ -79,7 +80,6 @@ function player1Click(e) {
         }
       turn *= -1;
     }
-  console.log(turn)  
   render();
 }
 
@@ -88,10 +88,10 @@ function playerNeg1Click(e) {
   const selectionIdx = cellElsNeg1.indexOf(e.target);
   // Sets valid clickable spaces (-7 to set the spaces index back to 0 to start at the beginning of the array)
   if (selectionIdx !== playerRef[-1].spaces[selectionIdx - 7]) {
-    console.log(`no no billy`)
+    mscMsg.textContent = `Keep your clicks to yourself!`
     return;
   } else if (!board[selectionIdx]) {
-      console.log(`thats a 0!`)
+      mscMsg.textContent = `Can't really take something from nothing`
       return;
   } else {
       // Sets the amount of gems to be distributed
@@ -114,7 +114,6 @@ function playerNeg1Click(e) {
       } 
       turn *= -1;
     }
-  console.log(turn)
   render();
 }
 
@@ -174,6 +173,7 @@ function render () {
   else mainMsg.textContent = `It's ${playerRef[turn].name}'s turn!`;
     // hide/show msc message
     mscMsg.style.visibility = winner ? 'hidden' : 'visible';
+  
     setTimeout(function() {
       mscMsg.textContent = '';
     }, 3000);
