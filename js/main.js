@@ -72,8 +72,10 @@ function player1Click(e) {
           mscMsg.textContent = `Have another go!`
           turn *= -1;
         }
+        // Captures opponent's gems 
+        if (board[i] === 0 && gems === 1) capture();
         // Continues gem distribution at beginning of array and skips opponent's store.
-        if (i === 12  && gems >= 1) reLoop(); 
+        if (i === 11  && gems >= 1) reLoop(); 
         
         gems--;
         board[i]++;
@@ -100,8 +102,6 @@ function playerNeg1Click(e) {
       // Distributes gems
       for (let i = selectionIdx + 1; i < board.length; i++) {
         if (gems < 1) break;
-        // Skips opponent's store
-        // if (i = 6) continue;
         // Allows player to play again if they place their last gem in their own store
         if (i === 13 && gems === 1) {
           mscMsg.textContent = `Have another go!`
@@ -119,13 +119,20 @@ function playerNeg1Click(e) {
 
 function reLoop () {
   for (let i = 0; i < board.length; i++) {
-    if (!gems) break;
+    if (gems === 2) break;
+    // starts loop again if there are more gems to distribute
+    if (i === 13 && gems > 0) reLoop();
     // Skips opponent's store on player -1's turn
     if (turn === -1 && i === 6) continue;
-    // if (turn === 1 && i === 11) continue;
+    // Skips opponent's store on player 1's turn
+    if (turn === 1 && i === 13) board[i]--;
     gems--
     board[i]++
-  }
+  }  
+}
+
+function capture (n) {
+
 }
 
 function getWinner() {
@@ -147,8 +154,6 @@ function getWinner() {
     determineWinner(board[6], board[13]);
     render();
   }
-  // let p1Score = board[6];
-  // let pNeg1Score = board[13];
   
   function determineWinner(p1, pNeg1) {
     if (p1 === pNeg1) winner = 'T';
@@ -181,7 +186,7 @@ function render () {
 
 
 function init () {
-  board = [0, 0, 4, 0, 0, 1, 30, 0, 0, 0, 4, 0, 1, 30];
+  board = [4, 4, 4, 4, 70, 4, 0, 4, 4, 4, 4, 59, 4, 0];
   gems = 0;
   turn = 1;
   
