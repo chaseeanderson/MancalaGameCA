@@ -68,7 +68,7 @@ function player1Click(e) {
         if (gems < 1) break;
         // Allows player to play again if they place their last gem in their own store
         if (i === 6 && gems === 1) {
-          console.log(`go again billy!`)
+          mscMsg.textContent = `Have another go!`
           turn *= -1;
         }
         // Continues gem distribution at beginning of array and skips opponent's store.
@@ -104,7 +104,7 @@ function playerNeg1Click(e) {
         // if (i = 6) continue;
         // Allows player to play again if they place their last gem in their own store
         if (i === 13 && gems === 1) {
-          console.log(`go again billy!`)
+          mscMsg.textContent = `Have another go!`
           turn *= -1;
         }
         if (i === 13  && gems >= 1) reLoop(); 
@@ -172,14 +172,16 @@ function render () {
   else if (winner) mainMsg.textContent = `${playerRef[winner].name} wins!`;
     // turn
   else mainMsg.textContent = `It's ${playerRef[turn].name}'s turn!`;
-    // miscellaneous messages
-    if (i === 6 && gems === 1) mscMsg.textContent = `Go again!`
-
+    // hide/show msc message
+    mscMsg.style.visibility = winner ? 'hidden' : 'visible';
+    setTimeout(function() {
+      mscMsg.style.visibility = 'hidden';
+    }, 3000);
 }
 
 
 function init () {
-  board = [0, 0, 0, 0, 0, 1, 30, 0, 0, 0, 0, 0, 1, 30];
+  board = [0, 0, 4, 0, 0, 1, 30, 0, 0, 0, 4, 0, 1, 30];
   gems = 0;
   turn = 1;
   
