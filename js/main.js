@@ -1,11 +1,11 @@
 /*----- constants -----*/
 const playerRef = {
   '1': {
-    name: 'Player 1',
+    name: 'PLAYER 1',
     spaces: [0, 1, 2, 3, 4, 5],
   },         
   '-1': {
-    name: 'Player 2',
+    name: 'PLAYER 2',
     spaces: [7, 8, 9, 10, 11, 12],
   }
 };
@@ -64,10 +64,10 @@ function player1Click(e) {
   const selectionIdx = cellEls1R.indexOf(e.target);
   // Sets valid clickable spaces
   if (selectionIdx !== playerRef[1].spaces[selectionIdx]) {
-    mscMsg.textContent = `Keep your clicks to yourself!`
+    mscMsg.textContent = `keep your clicks to yourself!`
     return;
   } else if (!board[selectionIdx]) {
-      mscMsg.textContent = `Can't really take something from nothing`
+      mscMsg.textContent = `can't really take something from nothing`
       return;
   } else {
       // Sets the amount of gems to be distributed
@@ -79,7 +79,7 @@ function player1Click(e) {
         if (gems < 1) break;
         // Allows player to play again if they place their last gem in their own store
         if (i === 6 && gems === 1) {
-          mscMsg.textContent = `Have another go!`
+          mscMsg.textContent = `have another go!`
           turn *= -1;
         }
         // Captures opponent's gems 
@@ -102,10 +102,10 @@ function playerNeg1Click(e) {
   const selectionIdx = cellElsNeg1.indexOf(e.target);
   // Sets valid clickable spaces (-7 to set the spaces index back to 0 to start at the beginning of the array)
   if (selectionIdx !== playerRef[-1].spaces[selectionIdx - 7]) {
-    mscMsg.textContent = `Keep your clicks to yourself!`
+    mscMsg.textContent = `keep your clicks to yourself!`
     return;
   } else if (!board[selectionIdx]) {
-      mscMsg.textContent = `Can't really take something from nothing`
+      mscMsg.textContent = `can't really take something from nothing`
       return;
   } else {
       // Sets the amount of gems to be distributed
@@ -116,7 +116,7 @@ function playerNeg1Click(e) {
         if (gems < 1) break;
         // Allows player to play again if they place their last gem in their own store
         if (i === 13 && gems === 1) {
-          mscMsg.textContent = `Have another go!`
+          mscMsg.textContent = `have another go!`
           turn *= -1;
         }
         // Captures opponent's gems 
@@ -195,11 +195,11 @@ function render () {
 
   // render messgaes
     // tie game
-  if (winner === 'T') mainMsg.textContent = `Tie Game!`;
+  if (winner === 'T') mainMsg.textContent = `TIE GAME!`;
     // winner
-  else if (winner) mainMsg.textContent = `${playerRef[winner].name} wins!`;
+  else if (winner) mainMsg.textContent = `${playerRef[winner].name} WINS!`;
     // turn
-  else mainMsg.textContent = `It's ${playerRef[turn].name}'s turn!`;
+  else mainMsg.textContent = `IT'S ${playerRef[turn].name}'S TURN!`;
     // hide/show msc message
     mscMsg.style.visibility = winner ? 'hidden' : 'visible';
   

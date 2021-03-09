@@ -1,5 +1,5 @@
 * {
-  font-family: helvetica;
+  font-family: 'Lato', sans-serif;
   box-sizing: border-box;
   background-color: #242530;
 }
@@ -15,7 +15,20 @@ body {
 
 header {
   color: #FF60C0;
-  font-size: 15vmin;
+  font-size: 18vmin;
+  text-shadow: 3vmin 1vmin 3vmin #FF60C0;
+}
+
+h1 {
+  color: #00FF5D;
+  text-shadow: 0vmin 0vmin 1vmin #00FF5D, 0vmin 0vmin 8vmin whitesmoke;
+  font-size: 6vmin;
+  padding-top: 2vmin;
+}
+
+h2 {
+  color: #EAFA6D;
+  text-shadow: 0vmin 0vmin 0.5vmin #EAFA6D;
 }
 
 #board {
@@ -32,14 +45,19 @@ header {
   color: white;
   align-items: center;
   justify-content: center;
+  opacity: 0.6;
+}
+
+#board > div:hover {
+  opacity: 1;
+  transform: scale(1.2);
+  transition: all 0.2s ease-in;
 }
 
 [id="6"] {
   grid-row: 1 / span 2;
-  background-color: peachpuff;
 }
 
 [id="13"] {
   grid-area: 1 / -2 / 3 / -1;
-  background-color: peachpuff;
 }
