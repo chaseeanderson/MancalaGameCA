@@ -49,55 +49,60 @@ function handleTurn(e) {
 }
 
 /*MAIN TURN-BASED FUNCTIONS*/
-
 function player1Click(e) {
   if (winner) return; 
   const selectionIdx = cellEls1R.indexOf(e.target);
-
+  
   // Sets valid clickable spaces
   if (selectionIdx !== playerRef[1].spaces[selectionIdx]) {
     mscMsg.textContent = `keep your clicks to yourself!`
     return;
   } else if (!board[selectionIdx]) {
-      mscMsg.textContent = `can't really take something from nothing`
-      return;
+    mscMsg.textContent = `can't really take something from nothing`
+    return;
   } 
   
   // Play the round
-
+  
     else {
       // Sets the amount of gems to be distributed
       gems = board[selectionIdx];
       board[selectionIdx] = 0;
-
+      
       // Distributes gems
-      for (let i = selectionIdx + 1; i < board.length; i++) {
-        if (gems < 1) break;
-
-        // Allows player to play again if they place their last gem in their own store
-        if (i === 6 && gems === 1) {
-          mscMsg.textContent = `have another go!`
-          turn *= -1;
-        }
-
-        // Captures opponent's gems 
-        if (board[i] === 0 && i !== 6 && gems === 1) capture(12 - i);
-
-        // Continues gem distribution at beginning of array and skips opponent's store.
-        if (i === 11  && gems >= 1) reLoop(); 
-        
-        gems--;
-        board[i]++;
-        console.log(`gems: ${gems}`)
-        console.log(`board: ${board}`)
-        console.log(`index: ${i}`)
-        console.log(`turn: ${turn}`)
-        }
+      distr3(selectionIdx, gems)
 
       turn *= -1;
-    }
+    
   render();
+      }
 }
+
+function distr3 (selec, gems) {
+  if (!gems) return;
+  board[selec + 1]++
+
+  // Allows player to play again if they place their last gem in their own store
+  if (selec === 6 && gems === 1) {
+    mscMsg.textContent = `have another go!`
+    turn *= -1;
+  }
+  
+  // Captures opponent's gems 
+  if (board[selec] === 0 && selec !== 6 && gems === 1) capture(12 - i);
+  
+  // Continues gem distribution at beginning of array and skips opponent's store.
+  if (selec === 11  && gems >= 1) reLoop(); 
+
+  console.log(`gems: ${gems}`)
+  console.log(`board: ${board}`)
+  console.log(`index: ${selec}`)
+  console.log(`turn: ${turn}`)
+        
+  render();
+  return setTimeout(function () {distr3 (selec + 1, gems - 1)}, 3000)
+}
+
 
 function playerNeg1Click(e) {
   if (winner) return; 
