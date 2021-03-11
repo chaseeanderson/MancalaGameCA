@@ -32,12 +32,13 @@ const replayBtn = document.querySelector('#reset');
 const mainMsg = document.querySelector('h1');
 const mscMsg = document.querySelector('h2');
 // Background player
-const bgPlayer = document.querySelector('#bg-player');
+const bgPlayerBtn = document.querySelector('#bg-player');
+const bgPlayer = document.querySelector('audio')
 
 /*----- event listeners -----*/
 document.getElementById('board').addEventListener('click', handleTurn);
 replayBtn.addEventListener('click', init);
-bgPlayer.addEventListener('click', toggleBg)
+bgPlayerBtn.addEventListener('click', toggleBg)
 
 
 /*----- functions -----*/
@@ -128,11 +129,13 @@ function distribute1 (space, gems) {
   }
   // Allows player to play again if they place their last gem in their own store
   if (space === 6 && gems === 1) {
+    playMsc();
     mscMsg.textContent = `have another go!`;
     turn *= -1;
   }
   // Captures opponent's gems 
   if (board[space] === 1 && space !== 6 && space === playerRef[1].spaces[space] && gems === 1) {
+    playMsc();
     capture(12 - space); 
   }
 
@@ -163,11 +166,13 @@ function distributeNeg1 (space, gems) {
   }
   // Allows player to play again if they place their last gem in their own store
   if (space === 13 && gems === 1) {
+    playMsc();
     mscMsg.textContent = `have another go!`;
     turn *= -1;
   }
   // Captures opponent's gems 
   if (board[space] === 1 && space !== 12 && space === playerRef[-1].spaces[space - 7] && gems === 1) {
+    playMsc();
     capture(Math.abs(12 - space)); 
   }
         
@@ -206,6 +211,7 @@ function getWinner() {
     }
 
     determineWinner(board[6], board[13]);
+    playWinner();
     render();
   }
   
@@ -241,7 +247,7 @@ function render () {
 }
 
 function init () {
-  board = [0, 0, 0, 0, 0, 1, 0, 4, 4, 4, 4, 4, 4, 0];
+  board = [4, 4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4, 4, 0];
   gems = 0;
   turn = 1;
   isPlaying = false;
@@ -249,20 +255,31 @@ function init () {
   getWinner();
   render()
 }
-
+// Sound functions
 function playBeep() {
   player.src = 'https://freesound.org/data/previews/515/515643_10246545-lq.mp3';
   player.play();
 }
 
 function toggleBg() {
-  player.src = 'https://freesound.org/data/previews/179/179838_488082-lq.mp3';
   if (!isPlaying) { 
-    player.play();
+    bgPlayer.play();
     isPlaying = true;
-    bgPlayer.textContent = 'PAUSE ME';
+    bgPlayerBtn.textContent = 'PAUSE ME';
   } else {
-    player.pause();
-    bgPlayer.textContent = 'PLAY ME';
+    bgPlayer.pause();
+    isPlaying = false;
+    bgPlayerBtn.textContent = 'PLAY ME';
   }
+}
+
+function playMsc() {
+  player.src = 'https://freesound.org/data/previews/159/159011_1326056-lq.mp3';
+  player.play();
+}
+
+function playWinner() {
+  player.src = 'https://freesound.org/data/previews/167/167535_1657645-lq.mp3';
+  bgPlayer.pause();
+  player.play();
 }

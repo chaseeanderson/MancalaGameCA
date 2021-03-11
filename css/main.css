@@ -54,6 +54,7 @@ h2 {
 
 #board > div:hover {
   opacity: 1;
+  margin-bottom: 2px;
   transform: scale(1.2);
   transition: all 0.2s ease-in;
 }
@@ -84,13 +85,13 @@ button:hover {
 
 #bg-player {
   position: absolute;
-  top: 1vmin;
-  left: 1vmin;
+  top: 2vmin;
+  left: 2vmin;
   margin: 0;
   background-color: #242530;
   border: 0.5vmin solid #5DE7FF;
   color: #00FF5D;
-  font-size: 3vmin;
+  font-size: 2vmin;
   padding: 2.5vmin;
   box-shadow: 0 0 8vmin black;
   border-radius: 1.5vmin;
