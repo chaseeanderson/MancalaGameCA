@@ -11,9 +11,12 @@ const playerRef =
   }
 };
 
+// Sounds
+const player = new Audio();
+
 
 /*----- app's state (variables) -----*/
-let board, gems, turn, scores, winner; 
+let board, gems, turn, scores, winner, isPlaying; 
 
 
 /*----- cached element references -----*/
@@ -24,14 +27,17 @@ const cellEls1 = [...document.querySelectorAll('#board div:nth-child(n+2):nth-ch
 // Reverses player 1's array to update correct direction
 const cellEls1R = cellEls1.reverse();
 // Replay button selector
-const replayBtn = document.querySelector('button'); 
+const replayBtn = document.querySelector('#reset'); 
 // Message elements
 const mainMsg = document.querySelector('h1');
 const mscMsg = document.querySelector('h2');
+// Background player
+const bgPlayer = document.querySelector('#bg-player');
 
 /*----- event listeners -----*/
 document.getElementById('board').addEventListener('click', handleTurn);
 replayBtn.addEventListener('click', init);
+bgPlayer.addEventListener('click', toggleBg)
 
 
 /*----- functions -----*/
@@ -48,7 +54,6 @@ function handleTurn(e) {
   render();
 }
 
-/*MAIN TURN-BASED FUNCTIONS*/
 function player1Click(e) {
   if (winner) return; 
   const selectionIdx = cellEls1R.indexOf(e.target);
@@ -101,7 +106,6 @@ function playerNeg1Click(e) {
   }
 }
 
-/*HELPER FUNCTIONS*/
 function distribute1 (space, gems) {
   // Allows loop to start at beginning once end is reached
   space = space % 14;
@@ -112,7 +116,7 @@ function distribute1 (space, gems) {
     render();
     return;
   }
-
+  playBeep();
   board[space]++
   
   /*Board Conditions*/
@@ -146,7 +150,8 @@ function distributeNeg1 (space, gems) {
     render();
     return;
   }
-
+  
+  playBeep();
   board[space]++
   
   /*Board Conditions*/
@@ -236,10 +241,28 @@ function render () {
 }
 
 function init () {
-  board = [4, 4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4, 4, 0];
+  board = [0, 0, 0, 0, 0, 1, 0, 4, 4, 4, 4, 4, 4, 0];
   gems = 0;
   turn = 1;
+  isPlaying = false;
   
   getWinner();
   render()
+}
+
+function playBeep() {
+  player.src = 'https://freesound.org/data/previews/515/515643_10246545-lq.mp3';
+  player.play();
+}
+
+function toggleBg() {
+  player.src = 'https://freesound.org/data/previews/179/179838_488082-lq.mp3';
+  if (!isPlaying) { 
+    player.play();
+    isPlaying = true;
+    bgPlayer.textContent = 'PAUSE ME';
+  } else {
+    player.pause();
+    bgPlayer.textContent = 'PLAY ME';
+  }
 }

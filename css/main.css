@@ -66,7 +66,7 @@ h2 {
   grid-area: 1 / -2 / 3 / -1;
 }
 
-button {
+#reset {
   margin: 4vmin auto;
   background-color: #242530;
   border: 0.5vmin solid #5DE7FF;
@@ -80,4 +80,18 @@ button {
 button:hover {
   transform: scale(1.2);
   transition: all 0.2s ease-in;
+}
+
+#bg-player {
+  position: absolute;
+  top: 1vmin;
+  left: 1vmin;
+  margin: 0;
+  background-color: #242530;
+  border: 0.5vmin solid #5DE7FF;
+  color: #00FF5D;
+  font-size: 3vmin;
+  padding: 2.5vmin;
+  box-shadow: 0 0 8vmin black;
+  border-radius: 1.5vmin;
 }
