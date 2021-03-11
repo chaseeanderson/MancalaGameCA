@@ -29,6 +29,8 @@ h1 {
 h2 {
   color: #EAFA6D;
   text-shadow: 0vmin 0vmin 0.5vmin #EAFA6D;
+  font-size: 4vmin;
+  padding-bottom: 2vmin;
 }
 
 #board {

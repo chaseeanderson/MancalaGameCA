@@ -1,5 +1,6 @@
 /*----- constants -----*/
-const playerRef = {
+const playerRef = 
+{
   '1': {
     name: 'PLAYER 1',
     spaces: [0, 1, 2, 3, 4, 5],
@@ -70,39 +71,11 @@ function player1Click(e) {
       board[selectionIdx] = 0;
       
       // Distributes gems
-      distr3(selectionIdx, gems)
-
-      turn *= -1;
+      distribute1(selectionIdx, gems)
     
   render();
-      }
-}
-
-function distr3 (selec, gems) {
-  if (!gems) return;
-  board[selec + 1]++
-
-  // Allows player to play again if they place their last gem in their own store
-  if (selec === 6 && gems === 1) {
-    mscMsg.textContent = `have another go!`
-    turn *= -1;
   }
-  
-  // Captures opponent's gems 
-  if (board[selec] === 0 && selec !== 6 && gems === 1) capture(12 - i);
-  
-  // Continues gem distribution at beginning of array and skips opponent's store.
-  if (selec === 11  && gems >= 1) reLoop(); 
-
-  console.log(`gems: ${gems}`)
-  console.log(`board: ${board}`)
-  console.log(`index: ${selec}`)
-  console.log(`turn: ${turn}`)
-        
-  render();
-  return setTimeout(function () {distr3 (selec + 1, gems - 1)}, 3000)
 }
-
 
 function playerNeg1Click(e) {
   if (winner) return; 
@@ -119,52 +92,87 @@ function playerNeg1Click(e) {
   
   // Play the round  
 
-    else {
-      // Sets the amount of gems to be distributed
-      gems = board[selectionIdx];
-      board[selectionIdx] = 0;
-
-      // Distributes gems
-      for (let i = selectionIdx + 1; i < board.length; i++) {
-        if (gems < 1) break;
-
-        // Allows player to play again if they place their last gem in their own store
-        if (i === 13 && gems === 1) {
-          mscMsg.textContent = `have another go!`
-          turn *= -1;
-        }
-
-        // Captures opponent's gems 
-        if (board[i] === 0 && i !== 13 && gems === 1) capture(Math.abs(i - 12)); // THE PROBLEM IS HERE
-
-        // Starts loop at the beginning if end is reached
-        if (i === 13  && gems >= 1) reLoop(); 
-        
-        gems--;
-        board[i]++;
-        console.log(`gems: ${gems}`)
-        console.log(`board: ${board}`)
-        console.log(`index: ${i}`)
-        console.log(`turn: ${turn}`)
-      }
-
-      turn *= -1;
-    }
-  render();
+  else {
+    // Sets the amount of gems to be distributed
+    gems = board[selectionIdx];
+    board[selectionIdx] = 0;
+    
+    // Distributes gems
+    distributeNeg1(selectionIdx, gems)
+  
+    render();
+  }
 }
 
 /*HELPER FUNCTIONS*/
+function distribute1 (space, gems) {
+  if (!gems) {
+    turn *= -1; 
+    render();
+    return;
+  }
+  board[space + 1]++
+
+  // Allows player to play again if they place their last gem in their own store
+  if (turn === 1 && space === 5 && gems === 1) {
+    mscMsg.textContent = `have another go!`;
+    turn *= -1;
+  }
+  
+  // Captures opponent's gems 
+  if (board[space] === 0 && space !== 6 && gems === 1) capture(11 - space);
+  
+  // Continues gem distribution at beginning of array and skips opponent's store.
+  if (space === 11  && gems >= 1) reLoop(); 
+
+  console.log(`gems: ${gems}`)
+  console.log(`board: ${board}`)
+  console.log(`index: ${space}`)
+  console.log(`turn: ${turn}`)
+        
+  render();
+  return setTimeout(function () {distribute1 (space + 1, gems - 1)}, 700)
+}
+
+function distributeNeg1 (space, gems) {
+  if (!gems) {
+    turn *= -1;
+    render();
+    return;
+  }
+  board[space + 1]++
+
+  // Allows player to play again if they place their last gem in their own store
+  if (space === 12 && gems === 1) {
+    mscMsg.textContent = `have another go!`;
+    turn *= -1;
+  }
+  
+  // Captures opponent's gems 
+  if (board[space] === 0 && space !== 12 && gems === 1) capture(Math.abs(11 - space));
+  
+  // Continues gem distribution at beginning of array and skips opponent's store.
+  if (space === 13 && gems >= 1) reLoop();
+    // board[space]++
+  console.log(`gems: ${gems}`)
+  console.log(`board: ${board}`)
+  console.log(`index: ${space}`)
+  console.log(`turn: ${turn}`)
+        
+  render();
+  return setTimeout(function () {distributeNeg1 (space + 1, gems - 1)}, 1000)
+}
+
 
 function capture (n) {
   if (turn === 1) {
     board[6] += board[n];
     board[n] = 0;
-  } else {
+  } else if (playerRef[turn].spaces){  // TODO fix this
     board[13] += board[n];
     board[n] = 0;
   }
-  console.log(`gotcha!`)
-  console.log(`turn: ${turn}`)
+  mscMsg.textContent = `grab those gems!`
 }
 
 function reLoop () {
@@ -247,16 +255,16 @@ function render () {
     mscMsg.style.visibility = winner ? 'hidden' : 'visible';
     setTimeout(function() {
       mscMsg.textContent = '';
-    }, 3000);
+    }, 2000);
 
   // Hide/Show play again button
   replayBtn.style.visibility = winner ? 'visible' : 'hidden';
 }
 
 function init () {
-  board = [4, 4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4, 4, 0];
+  board = [0, 0, 0, 0, 0, 4, 0, 1, 0, 4, 4, 4, 4, 0];
   gems = 0;
-  turn = 1;
+  turn = -1;
   
   getWinner();
   render()
