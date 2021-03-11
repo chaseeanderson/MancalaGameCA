@@ -236,7 +236,7 @@ function render () {
 }
 
 function init () {
-  board = [0, 0, 0, 0, 5, 3, 1, 0, 0, 0, 1, 5, 1, 0];
+  board = [4, 4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4, 4, 0];
   gems = 0;
   turn = 1;
   
