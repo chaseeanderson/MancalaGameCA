@@ -35,8 +35,8 @@ h2 {
 
 #board {
   display: grid;
-  grid-template-rows: repeat(2, 20vmin);
-  grid-template-columns: repeat(8, 20vmin);
+  grid-template-rows: repeat(2, 18vmin);
+  grid-template-columns: repeat(8, 18vmin);
 }
 
 #board > div {  
@@ -44,6 +44,7 @@ h2 {
   border: 0.5vmin solid #5DE7FF;
   margin: 0.1vmin;
   border-radius: 20%;
+  font-size: 4vmin;
   color: white;
   align-items: center;
   justify-content: center;
