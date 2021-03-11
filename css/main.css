@@ -75,3 +75,8 @@ button {
   box-shadow: 0 0 8vmin black;
   border-radius: 1.5vmin;
 }
+
+button:hover {
+  transform: scale(1.2);
+  transition: all 0.2s ease-in;
+}

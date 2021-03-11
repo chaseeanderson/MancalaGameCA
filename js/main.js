@@ -11,8 +11,6 @@ const playerRef =
   }
 };
 
-// TODO - get gem image USE VECTOR SCALE IMAGES or whatever its called
-// const gemsImg = 
 
 /*----- app's state (variables) -----*/
 let board, gems, turn, scores, winner; 
@@ -34,6 +32,7 @@ const mscMsg = document.querySelector('h2');
 /*----- event listeners -----*/
 document.getElementById('board').addEventListener('click', handleTurn);
 replayBtn.addEventListener('click', init);
+
 
 /*----- functions -----*/
 init()
@@ -129,13 +128,10 @@ function distribute1 (space, gems) {
     turn *= -1;
   }
   // Captures opponent's gems 
-  if (board[space] === 0 && space !== 6 && gems === 1) capture(11 - space); // TODO fix capture rule
-  
-    console.log(`index: ${space}`)
-  console.log(`gems: ${gems}`)
-  console.log(`board: ${board}`)
-  console.log(`turn: ${turn}`)
-        
+  if (board[space] === 1 && space !== 6 && space === playerRef[1].spaces[space] && gems === 1) {
+    capture(12 - space); 
+  }
+
   render();
   return setTimeout(function () {distribute1 (space + 1, gems - 1)}, 1000)
 }
@@ -166,30 +162,26 @@ function distributeNeg1 (space, gems) {
     turn *= -1;
   }
   // Captures opponent's gems 
-  if (board[space] === 0 && space !== 12 && gems === 1) capture(Math.abs(11 - space)); // TODO fix 
-  
-    console.log(`index: ${space}`)
-  console.log(`gems: ${gems}`)
-  console.log(`board: ${board}`)
-  console.log(`turn: ${turn}`)
+  if (board[space] === 1 && space !== 12 && space === playerRef[-1].spaces[space - 7] && gems === 1) {
+    capture(Math.abs(12 - space)); 
+  }
         
   render();
   return setTimeout(function () {distributeNeg1 (space + 1, gems - 1)}, 1000)
 }
 
-
 function capture (n) {
   if (turn === 1) {
     board[6] += board[n];
     board[n] = 0;
-  } else if (playerRef[turn].spaces){  // TODO fix this
+  } else if (turn === -1) {  
     board[13] += board[n];
     board[n] = 0;
   }
   mscMsg.textContent = `grab those gems!`
 }
 
-function getWinner() {
+function getWinner() { 
   winner = null;
   const p1BoardSum = board[0] + board[1] + board[2] + board[3] + board[4] + board[5];
   const pNeg1BoardSum = board[7] + board[8] + board[9] + board[10] + board[11] + board[12];
@@ -244,7 +236,7 @@ function render () {
 }
 
 function init () {
-  board = [4, 4, 4, 4, 4, 24, 0, 4, 4, 4, 4, 4, 12, 0];
+  board = [0, 0, 0, 0, 5, 3, 1, 0, 0, 0, 1, 5, 1, 0];
   gems = 0;
   turn = 1;
   
