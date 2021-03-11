@@ -33,20 +33,20 @@ const mainMsg = document.querySelector('h1');
 const mscMsg = document.querySelector('h2');
 // Background player
 const bgPlayerBtn = document.querySelector('#bg-player');
-const bgPlayer = document.querySelector('audio')
+const bgPlayer = document.querySelector('audio');
 
 /*----- event listeners -----*/
 document.getElementById('board').addEventListener('click', handleTurn);
 replayBtn.addEventListener('click', init);
-bgPlayerBtn.addEventListener('click', toggleBg)
+bgPlayerBtn.addEventListener('click', toggleBg);
 
 
 /*----- functions -----*/
-init()
+init();
 
 function handleTurn(e) {
   if (turn === 1) {
-    player1Click(e)
+    player1Click(e);
   } else {
     playerNeg1Click(e);
   }
@@ -56,17 +56,18 @@ function handleTurn(e) {
 }
 
 function player1Click(e) {
+  mscMsg.textContent = '';
   if (winner) return; 
   const selectionIdx = cellEls1R.indexOf(e.target);
   
   // Sets valid clickable spaces
   if (selectionIdx !== playerRef[1].spaces[selectionIdx]) {
-    mscMsg.textContent = `keep your clicks to yourself!`
+    mscMsg.textContent = `keep your clicks to yourself!`;
     return;
   } else if (!board[selectionIdx]) {
-    mscMsg.textContent = `can't really take something from nothing`
+    mscMsg.textContent = `can't really take something from nothing`;
     return;
-  } 
+  }
   
   // Play the round
   
@@ -76,23 +77,25 @@ function player1Click(e) {
       board[selectionIdx] = 0;
       
       // Distributes gems
-      distribute1(selectionIdx + 1, gems)
-  render();
-  }
+      distribute1(selectionIdx + 1, gems);
+
+      render();
+    }
 }
 
 function playerNeg1Click(e) {
+  mscMsg.textContent = '';
   if (winner) return; 
   const selectionIdx = cellElsNeg1.indexOf(e.target);
 
   // Sets valid clickable spaces 
   if (selectionIdx !== playerRef[-1].spaces[selectionIdx - 7]) {
-    mscMsg.textContent = `keep your clicks to yourself!`
+    mscMsg.textContent = `keep your clicks to yourself!`;
     return;
   } else if (!board[selectionIdx]) {
-      mscMsg.textContent = `can't really take something from nothing`
+      mscMsg.textContent = `can't really take something from nothing`;
       return;
-  } 
+    } 
   
   // Play the round  
 
@@ -103,6 +106,7 @@ function playerNeg1Click(e) {
     
     // Distributes gems
     distributeNeg1(selectionIdx + 1, gems)
+
     render();
   }
 }
@@ -118,7 +122,7 @@ function distribute1 (space, gems) {
     return;
   }
   playBeep();
-  board[space]++
+  board[space]++;
   
   /*Board Conditions*/
 
@@ -140,7 +144,7 @@ function distribute1 (space, gems) {
   }
 
   render();
-  return setTimeout(function () {distribute1 (space + 1, gems - 1)}, 1000)
+  return setTimeout(function () {distribute1 (space + 1, gems - 1)}, 600);
 }
 
 function distributeNeg1 (space, gems) {
@@ -155,7 +159,7 @@ function distributeNeg1 (space, gems) {
   }
   
   playBeep();
-  board[space]++
+  board[space]++;
   
   /*Board Conditions*/
 
@@ -177,7 +181,7 @@ function distributeNeg1 (space, gems) {
   }
         
   render();
-  return setTimeout(function () {distributeNeg1 (space + 1, gems - 1)}, 1000)
+  return setTimeout(function () {distributeNeg1 (space + 1, gems - 1)}, 600);
 }
 
 function capture (n) {
@@ -188,7 +192,7 @@ function capture (n) {
     board[13] += board[n];
     board[n] = 0;
   }
-  mscMsg.textContent = `grab those gems!`
+  mscMsg.textContent = `grab those gems!`;
 }
 
 function getWinner() { 
@@ -237,12 +241,8 @@ function render () {
     // Turn
   else mainMsg.textContent = `IT'S ${playerRef[turn].name}'S TURN!`;
     // Hide/Show msc message
-    mscMsg.style.visibility = winner ? 'hidden' : 'visible';
-    setTimeout(function() {
-      mscMsg.textContent = '';
-    }, 2000);
-
-  // Hide/Show play again button
+  mscMsg.style.visibility = winner ? 'hidden' : 'visible';
+    // Hide/Show play again button
   replayBtn.style.visibility = winner ? 'visible' : 'hidden';
 }
 
@@ -253,8 +253,9 @@ function init () {
   isPlaying = false;
   
   getWinner();
-  render()
+  render();
 }
+
 // Sound functions
 function playBeep() {
   player.src = 'https://freesound.org/data/previews/515/515643_10246545-lq.mp3';
