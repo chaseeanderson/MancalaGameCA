@@ -11,6 +11,7 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  cursor: default;
 }
 
 header {
@@ -54,6 +55,7 @@ h2 {
 
 #board > div:hover {
   opacity: 1;
+  cursor: pointer;
   margin-bottom: 2px;
   transform: scale(1.2);
   transition: all 0.2s ease-in;
@@ -82,6 +84,7 @@ h2 {
 button:hover {
   transform: scale(1.2);
   transition: all 0.2s ease-in;
+  cursor: pointer;
 }
 
 #bg-player {

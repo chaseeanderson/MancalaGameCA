@@ -140,6 +140,8 @@ function distribute1 (space, gems) {
   // Captures opponent's gems 
   if (board[space] === 1 && space !== 6 && space === playerRef[1].spaces[space] && gems === 1) {
     playMsc();
+    board[6] += board[space];
+    board[space] = 0;
     capture(12 - space); 
   }
 
@@ -177,6 +179,8 @@ function distributeNeg1 (space, gems) {
   // Captures opponent's gems 
   if (board[space] === 1 && space !== 13 && space === playerRef[-1].spaces[space - 7] && gems === 1) {
     playMsc();
+    board[13] += board[space];
+    board[space] = 0;
     capture(12 - space); 
   }
         
