@@ -1,11 +1,13 @@
 # <p style="text-align: center;">MANCALA</p>
 ## GA PROJECT 1 // A WEB BROWSER-BASED GAME  
 &nbsp;
-#### This is an interactive browser-based game based on the game of the game Mancala.&nbsp;
-&nbsp;
-[Click here to start playing!]()
+#### This is an interactive browser-based game based on the game of the game Mancala.
 &nbsp;  
-Please see below for a list of screenshots of the game in use: &nbsp;  
+### [Click here to start playing!](https://chaseeanderson.github.io/MancalaGameCA/)
+
+&nbsp;  
+
+Please see below for a list of screenshots of the game in use:
 &nbsp;  
 >##### Upon loading
 > ![](https://i.imgur.com/TAyddKc.png)
