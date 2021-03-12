@@ -1,0 +1,92 @@
+1. Define required constants   
+   1. PlayerRef object
+      1. 1 (represents player 1)
+         1. Name
+         2. Spaces (represents clickable spaces for that player)
+      2. -1 (represents player 2)
+         1. Name
+         2. Spaces (represents clickable spaces for that player)
+   2. Player
+      1. Referenced whenever new sounds are added. 
+
+
+2. Define required variables used to track the state of the game
+   1. Board
+      1. An array representing all of the spaces on the board. 
+   2. Gems
+      1. This will store the number of gems to be distributed based off of how many were present in the space that was clicked. 
+   3. Turn
+      1. Updated between 1 and -1
+      2. Start with 1 at init
+   4. Winner
+      1. Can be 1, -1, or ‘T’ for tie.         
+      2. Set to null at init. 
+      3. Winner is determined by which player has the most gems in their store. The game is over when one player has no stones left on their board. 
+   5. isPlaying
+      1. Used to toggle the background music. 
+
+
+3. Store elements on the page that will be accessed in code more than once in variables to make code more concise, readable and performant.
+   1. DOM elements
+      1. Cell variables that select divs and set them to arrays. Maps the board array to it’s corresponding div. 
+      2. Replay Button 
+         1. Accesses ‘Replay’ button element
+      3. Messages
+         1. Selects h1 and h2 elements to update messages that appear on the screen. 
+      4. Background player
+         1. Accesses ‘Play/Pause’ button element for background sound and the audio element that stores the sound. 
+
+
+4. Upon loading the app should:
+   1. Initialize the state variables
+      1. Initialize the board array. 
+         1. Each element should set to a value of 4 (this is how the game starts). 
+         2. Index 6 represents player 1’s score and index 13 represents player -1’s score
+      2. Initialize the gems variable to 0 since no spaces have been selected. 
+      3. Initialize the turn to 1.                            
+      4. Initialize the winner status to null. 
+      5. Initialize isPlaying to false for Play/Pause toggling. 
+   2. Render those values to the page
+      1. Render the board
+         1. Iterate over the board array. For each element:
+            1. Use the index of the element to map it’s corresponding HTML div. 
+            2. Display the element value at the index of the array that corresponds to the space it is mapped to. 
+      2. Render messages
+         1. If the winner is ‘T’ (tie) render ‘TIE GAME!’ as the main message
+         2. If the winner is ‘1’ or ‘-1’ set the main message as the winning player’s name and ‘WINS!’
+         3. Otherwise display the main message as whichever player’s turn. 
+         4. Wait for the user to click a square
+
+
+5. Handle when a player clicks a square
+   1. An event listener is established, calling the handleTurn variable. 
+      1. A function is then called corresponding to which player’s turn it is. 
+         1. Sets any miscellaneous messages to an empty string. 
+         2. Returns if winner becomes true. 
+         3. Create a variable used to store the the index of the space selected.
+         4. Use an if statement to set the valid spaces a player can click depending on who’s turn it is and updates the miscellaneous message accordingly. 
+         5. Play the round.
+         6. Gems are set to the value in the board array that corresponds to the index that was selected. 
+         7. That value is now set to 0. 
+         8. A ‘distribute’ function is then called to pass out the gems, starting at the space after the selected space. 
+            1. A recursive function is used to continue adding gems one at a time to each following space. 
+            2. The base case is when ‘gems’ reaches 0. 
+               1. Flip turns once base case is met. 
+            3. A function is called each time to play a noise as gems are added. 
+
+
+            4. Board Conditions 
+               1. If the index corresponds to the opponent’s ‘store’ it must be skipped. 
+               2. If a player places their last gem in their own store they can play again. 
+               3. If a player places their last gem in a space with no gems in it on their own side, they capture all of the gems directly across from that space on their opponent’s side. 
+            5. Render is called to reflect the updated array. 
+            6. SetTimeout is used to add delay to the gems being distributed one at a time. 
+         9. A winner is established if on player’s board has no gems left. 
+            1. The other player then adds all the remaining gems on their side to their store. 
+            2. Whoever has the most gems wins!
+      2. ‘getWinner’ and ‘render’ functions are called to reflect the outcome of a clicked square. 
+
+      
+6. Handle a player clicking the replay button
+   1. Initialize all state variables to their ‘upon load’ values.
+   2. Render.
