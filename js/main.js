@@ -16,7 +16,7 @@ const player = new Audio();
 
 
 /*----- app's state (variables) -----*/
-let board, gems, turn, scores, winner, isPlaying; 
+let board, gems, turn, winner, isPlaying; 
 
 
 /*----- cached element references -----*/
@@ -175,9 +175,9 @@ function distributeNeg1 (space, gems) {
     turn *= -1;
   }
   // Captures opponent's gems 
-  if (board[space] === 1 && space !== 12 && space === playerRef[-1].spaces[space - 7] && gems === 1) {
+  if (board[space] === 1 && space !== 13 && space === playerRef[-1].spaces[space - 7] && gems === 1) {
     playMsc();
-    capture(Math.abs(12 - space)); 
+    capture(12 - space); 
   }
         
   render();
